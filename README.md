@@ -38,7 +38,8 @@ bug4：测试侧边栏发现收起时组件宽窄不变，原因是layout.tsx中
 
 阶段一效果图：
 
-![image](../assets/blog_res/README.assets/image.png)
+<img width="1920" height="834" alt="image" src="https://github.com/user-attachments/assets/da0d8170-60f2-482e-8e41-579401539c2b" />
+
 
 # 二、视频的嵌入
 
@@ -52,13 +53,13 @@ pnpm install xgplayer jotai
 
 在src\store\atom.ts中定义播放状态 测试图如下：
 
-![image 1](../assets/blog_res/README.assets/image 1.png)
+<img width="1920" height="834" alt="image 1" src="https://github.com/user-attachments/assets/fdba9b3b-0f7b-46aa-9e8a-69ee13b5070e" />
 
 # 三、视频内容展示
 
 在src\components\VideoInfoOverlay.tsx中定义右侧交互栏和下侧的详情，并在page中引入 bug:交互栏的图标颜色始终无法更改 解决方案：原因是在引入tailcss时用!important把图标颜色写死了，改为默认白色 测试图如下：
 
-![image 2](../assets/blog_res/README.assets/image 2.png)
+<img width="1920" height="834" alt="image 2" src="https://github.com/user-attachments/assets/d22bc13f-5448-4d95-a564-1318a54ba87c" />
 
 # 四、评论区
 
@@ -66,7 +67,7 @@ pnpm install xgplayer jotai
 
 测试图如下：
 
-![image 3](../assets/blog_res/README.assets/image 3.png)
+<img width="1920" height="834" alt="image 3" src="https://github.com/user-attachments/assets/fbec19df-04e1-4dc6-9f65-348e342b0216" />
 
 # 五、Mock
 
