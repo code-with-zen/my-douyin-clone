@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useAtom } from "jotai";
-import { Spin, Toast } from "@douyinfe/semi-ui";
-import { videoListAtom, currentVideoIndexAtom, currentVideoAtom } from "../store/atoms";
-import { mockRequest } from "../utils/mockRequest";
-import { MOCK_VIDEO_LIST, VideoData } from "../mock/data";
-import VideoPlayer from "../components/VideoPlayer";
-import VideoInfoOverlay from "../components/VideoInfoOverlay";
-import CommentDrawer from "../components/CommentDrawer";
+import { Spin, Toast } from '@douyinfe/semi-ui';
+import { useAtom } from 'jotai';
+import React, { useEffect, useState } from 'react';
+import CommentDrawer from '../components/CommentDrawer';
+import VideoInfoOverlay from '../components/VideoInfoOverlay';
+import VideoPlayer from '../components/VideoPlayer';
+import { MOCK_VIDEO_LIST, type VideoData } from '../mock/data';
+import {
+  currentVideoAtom,
+  currentVideoIndexAtom,
+  videoListAtom,
+} from '../store/atoms';
+import { mockRequest } from '../utils/mockRequest';
 
 export default function Page() {
   const [videoList, setVideoList] = useAtom(videoListAtom);
@@ -24,7 +28,7 @@ export default function Page() {
         const data = await mockRequest<VideoData[]>(MOCK_VIDEO_LIST, 600);
         setVideoList(data);
       } catch (error) {
-        Toast.error("数据加载失败");
+        Toast.error('数据加载失败');
       } finally {
         setLoading(false);
       }
@@ -43,18 +47,28 @@ export default function Page() {
         return;
       }
 
-      if (e.key === "ArrowUp") {
+      if (e.key === 'ArrowUp') {
         e.preventDefault();
-        currentIndex > 0 ? setCurrentIndex(prev => prev - 1) : Toast.warning("已经是第一个视频了");
-      } else if (e.key === "ArrowDown") {
+        currentIndex > 0
+          ? setCurrentIndex(prev => prev - 1)
+          : Toast.warning('已经是第一个视频了');
+      } else if (e.key === 'ArrowDown') {
         e.preventDefault();
-        currentIndex < videoList.length - 1 ? setCurrentIndex(prev => prev + 1) : Toast.warning("已经是最后一个视频了");
+        currentIndex < videoList.length - 1
+          ? setCurrentIndex(prev => prev + 1)
+          : Toast.warning('已经是最后一个视频了');
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentIndex, videoList.length, setCurrentIndex, isCommentVisible, loading]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [
+    currentIndex,
+    videoList.length,
+    setCurrentIndex,
+    isCommentVisible,
+    loading,
+  ]);
 
   if (loading) {
     return (
@@ -68,31 +82,28 @@ export default function Page() {
 
   return (
     <div className="h-full w-full bg-black flex items-center justify-center overflow-hidden">
-        <div className="w-full h-full relative group">
-            <VideoPlayer
-                url={currentVideo.url}
-                poster={currentVideo.poster}
-            />
+      <div className="w-full h-full relative group">
+        <VideoPlayer url={currentVideo.url} poster={currentVideo.poster} />
 
-            <VideoInfoOverlay
-                author={{
-                    name: currentVideo.author,
-                    avatar: currentVideo.authorAvatar
-                }}
-                description={currentVideo.description}
-                musicName={`原声 - ${currentVideo.author}`}
-                stats={currentVideo.stats}
-                onCommentClick={() => setIsCommentVisible(true)}
-            />
+        <VideoInfoOverlay
+          author={{
+            name: currentVideo.author,
+            avatar: currentVideo.authorAvatar,
+          }}
+          description={currentVideo.description}
+          musicName={`原声 - ${currentVideo.author}`}
+          stats={currentVideo.stats}
+          onCommentClick={() => setIsCommentVisible(true)}
+        />
 
-            <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-black/60 to-transparent pointer-events-none z-10" />
+        <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-black/60 to-transparent pointer-events-none z-10" />
 
-            <CommentDrawer
-              visible={isCommentVisible}
-              onClose={() => setIsCommentVisible(false)}
-              commentCount={currentVideo.stats.commentCount}
-            />
-        </div>
+        <CommentDrawer
+          visible={isCommentVisible}
+          onClose={() => setIsCommentVisible(false)}
+          commentCount={currentVideo.stats.commentCount}
+        />
+      </div>
     </div>
   );
 }

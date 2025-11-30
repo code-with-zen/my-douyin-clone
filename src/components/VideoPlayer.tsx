@@ -44,12 +44,17 @@ export default function VideoPlayer({ url, poster }: VideoPlayerProps) {
     <div className="w-full h-full bg-black flex items-center justify-center relative group/player">
       {/* 模糊背景效果 */}
       <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-         <video src={url} className="w-full h-full object-cover blur-[50px] scale-110" muted loop />
+        <video
+          src={url}
+          className="w-full h-full object-cover blur-[50px] scale-110"
+          muted
+          loop
+        />
       </div>
 
       {/* 播放器实体 */}
       <div className="relative z-10 w-full h-full flex items-center justify-center">
-         <div ref={playerRef} id="mse" className="w-full h-full" />
+        <div ref={playerRef} id="mse" className="w-full h-full" />
       </div>
     </div>
   );
